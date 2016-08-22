@@ -1,3 +1,11 @@
+var http = require('http');
+var express = require('express');
+
+var app = express();
+app.use(express.static('public'));
+
+var server = http.Server(app);
+
 var React = require('react');
 
 var ReactDOM = require('react-dom');
@@ -33,3 +41,5 @@ var PersonList = function () {
 document.addEventListener('DOMContentLoaded', function () {
     ReactDOM.render( < PersonList / > , document.getElementById('app'));
 });
+
+server.listen(process.env.PORT || 8080);
