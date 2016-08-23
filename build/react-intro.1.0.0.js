@@ -46,8 +46,6 @@
 
 	'use strict';
 	
-	//var server = http.Server(app);
-	
 	var React = __webpack_require__(1);
 	
 	var ReactDOM = __webpack_require__(34);
@@ -73,23 +71,37 @@
 	    );
 	};
 	
-	var PersonList = function PersonList() {
-	    return React.createElement(
-	        'div',
-	        { className: 'person-list' },
-	        React.createElement(Person, null),
-	        React.createElement(Person, null),
-	        React.createElement(Person, null),
-	        React.createElement(Person, null),
-	        React.createElement(Person, null)
-	    );
-	};
+	//var PersonList = function () {
+	//    return (
+	//        <div className = "person-list">
+	//            <Person/>
+	//            <Person/>
+	//            <Person/>
+	//            <Person/>
+	//            <Person/>
+	//        </div>
+	//    );
+	//};
+	
+	var PersonList = React.createClass({
+	    displayName: 'PersonList',
+	
+	    render: function render() {
+	        var people = [];
+	        for (var i = 0; i < 5; i++) {
+	            people.push(React.createElement(Person, null));
+	        }
+	        return React.createElement(
+	            'div',
+	            { className: 'person-list' },
+	            people
+	        );
+	    }
+	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	    ReactDOM.render(React.createElement(PersonList, null), document.getElementById('app'));
 	});
-	
-	//server.listen(process.env.PORT || 8080);
 
 /***/ },
 /* 1 */
