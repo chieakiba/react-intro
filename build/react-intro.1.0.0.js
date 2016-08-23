@@ -50,39 +50,72 @@
 	
 	var ReactDOM = __webpack_require__(34);
 	
-	//Stateful Person variable/component
-	var Person = React.createClass({
-	    displayName: 'Person',
+	var SoundCloudEmbed = function SoundCloudEmbed(props) {
+	    var playerUrl = 'https://w.soundcloud.com/player/';
+	    var trackUrl = 'https://api.soundcloud.com/tracks/' + props.trackId;
+	    var options = 'auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true';
+	    var src = playerUrl + '?url=' + trackUrl + '&' + options;
+	    return React.createElement('iframe', { width: '100%', height: '450', scrolling: 'no', frameborder: 'no', src: src });
+	};
+	
+	var Button = function Button(props) {
+	    return React.createElement(
+	        'button',
+	        { onClick: props.onClick },
+	        props.text
+	    );
+	};
+	
+	var Surprise = React.createClass({
+	    displayName: 'Surprise',
 	
 	    getInitialState: function getInitialState() {
 	        return {
-	            highlight: false
+	            clicked: false
 	        };
 	    },
-	    onClick: function onClick() {
+	    onButtonClick: function onButtonClick() {
 	        this.setState({
-	            highlight: !this.state.highlight
+	            clicked: true
 	        });
 	    },
 	    render: function render() {
-	        var classes = 'person ' + (this.state.highlight ? 'highlight' : '');
 	        return React.createElement(
 	            'div',
-	            { className: classes, onClick: this.onClick },
-	            React.createElement(
-	                'div',
-	                { className: 'person-name' },
-	                this.props.name
-	            ),
-	            React.createElement('img', { className: 'person-img', src: this.props.imageUrl }),
-	            React.createElement(
-	                'div',
-	                { className: 'person-job' },
-	                this.props.job
-	            )
+	            null,
+	            React.createElement(Button, { onClick: this.onButtonClick, text: 'Ready to be amazed?' }),
+	            this.state.clicked ? React.createElement(SoundCloudEmbed, { trackId: '191075550' }) : null
 	        );
 	    }
 	});
+	
+	document.addEventListener('DOMContentLoaded', function () {
+	    ReactDOM.render(React.createElement(Surprise, null), document.getElementById('app'));
+	});
+	
+	//Stateful Person variable/component
+	//var Person = React.createClass({
+	//    getInitialState: function() {
+	//        return {
+	//            highlight: false
+	//        };
+	//    },
+	//    onClick: function() {
+	//        this.setState({
+	//            highlight: !this.state.highlight
+	//        });
+	//    },
+	//    render: function() {
+	//        var classes = 'person ' + (this.state.highlight ? 'highlight' : '');
+	//        return (
+	//            <div className={classes} onClick={this.onClick}>
+	//                <div className='person-name'>{this.props.name}</div>
+	//                <img className='person-img' src={this.props.imageUrl}/>
+	//                <div className='person-job'>{this.props.job}</div>
+	//            </div>
+	//        );
+	//    }
+	//});
 	
 	//var Person = function (props) {
 	//    var name = 'Derek Zoolander';
@@ -97,18 +130,18 @@
 	//    );
 	//};
 	
-	var PersonList = function PersonList() {
-	    return React.createElement(
-	        'div',
-	        { className: 'person-list' },
-	        React.createElement(Person, { name: 'Derek Zoolander',
-	            imageUrl: 'http://uifaces.com/assets/static/images/zoolander.jpg',
-	            job: 'Male model' }),
-	        React.createElement(Person, { name: 'Donald Knuth',
-	            imageUrl: 'http://www-cs-faculty.stanford.edu/~uno/don.gif',
-	            job: 'Clever chap' })
-	    );
-	};
+	//var PersonList = function () {
+	//    return (
+	//        <div className = "person-list">
+	//            <Person name="Derek Zoolander"
+	//                    imageUrl="http://uifaces.com/assets/static/images/zoolander.jpg"
+	//                    job="Male model"/>
+	//            <Person name="Donald Knuth"
+	//                    imageUrl="http://www-cs-faculty.stanford.edu/~uno/don.gif"
+	//                    job="Clever chap"/>
+	//        </div>
+	//    );
+	//};
 	
 	//var PersonList = React.createClass({
 	//    render: function() {
@@ -122,9 +155,9 @@
 	//    }
 	//});
 	
-	document.addEventListener('DOMContentLoaded', function () {
-	    ReactDOM.render(React.createElement(PersonList, null), document.getElementById('app'));
-	});
+	//document.addEventListener('DOMContentLoaded', function () {
+	//    ReactDOM.render( <PersonList/> , document.getElementById('app'));
+	//});
 
 /***/ },
 /* 1 */
