@@ -50,54 +50,77 @@
 	
 	var ReactDOM = __webpack_require__(34);
 	
-	var Person = function Person() {
-	    var name = 'Derek Zoolander';
-	    var imageUrl = 'http://uifaces.com/assets/static/images/zoolander.jpg';
-	    var job = 'Male model';
-	    return React.createElement(
-	        'div',
-	        { className: 'person' },
-	        React.createElement(
-	            'div',
-	            { className: 'person-name' },
-	            name
-	        ),
-	        React.createElement('img', { className: 'person-img', src: imageUrl }),
-	        React.createElement(
-	            'div',
-	            { className: 'person-job' },
-	            job
-	        )
-	    );
-	};
+	//Stateful Person variable/component
+	var Person = React.createClass({
+	    displayName: 'Person',
 	
-	//var PersonList = function () {
-	//    return (
-	//        <div className = "person-list">
-	//            <Person/>
-	//            <Person/>
-	//            <Person/>
-	//            <Person/>
-	//            <Person/>
-	//        </div>
-	//    );
-	//};
-	
-	var PersonList = React.createClass({
-	    displayName: 'PersonList',
-	
+	    getInitialState: function getInitialState() {
+	        return {
+	            highlight: false
+	        };
+	    },
+	    onClick: function onClick() {
+	        this.setState({
+	            highlight: !this.state.highlight
+	        });
+	    },
 	    render: function render() {
-	        var people = [];
-	        for (var i = 0; i < 5; i++) {
-	            people.push(React.createElement(Person, null));
-	        }
+	        var classes = 'person ' + (this.state.highlight ? 'highlight' : '');
 	        return React.createElement(
 	            'div',
-	            { className: 'person-list' },
-	            people
+	            { className: classes, onClick: this.onClick },
+	            React.createElement(
+	                'div',
+	                { className: 'person-name' },
+	                this.props.name
+	            ),
+	            React.createElement('img', { className: 'person-img', src: this.props.imageUrl }),
+	            React.createElement(
+	                'div',
+	                { className: 'person-job' },
+	                this.props.job
+	            )
 	        );
 	    }
 	});
+	
+	//var Person = function (props) {
+	//    var name = 'Derek Zoolander';
+	//    var imageUrl = 'http://uifaces.com/assets/static/images/zoolander.jpg';
+	//    var job = 'Male model';
+	//    return (
+	//        <div className = 'person'>
+	//            <div className = 'person-name'>{props.name}</div>
+	//            <img className = 'person-img' src = {props.imageUrl}/>
+	//            <div className = 'person-job'>{props.job}</div>
+	//        </div >
+	//    );
+	//};
+	
+	var PersonList = function PersonList() {
+	    return React.createElement(
+	        'div',
+	        { className: 'person-list' },
+	        React.createElement(Person, { name: 'Derek Zoolander',
+	            imageUrl: 'http://uifaces.com/assets/static/images/zoolander.jpg',
+	            job: 'Male model' }),
+	        React.createElement(Person, { name: 'Donald Knuth',
+	            imageUrl: 'http://www-cs-faculty.stanford.edu/~uno/don.gif',
+	            job: 'Clever chap' })
+	    );
+	};
+	
+	//var PersonList = React.createClass({
+	//    render: function() {
+	//        var people = [];
+	//        for (var i=0; i < 5; i++) {
+	//            people.push(<Person/>);
+	//        }
+	//        return(
+	//            <div className="person-list">{people}</div>
+	//        );
+	//    }
+	//});
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	    ReactDOM.render(React.createElement(PersonList, null), document.getElementById('app'));
